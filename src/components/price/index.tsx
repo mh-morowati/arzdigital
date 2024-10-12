@@ -7,40 +7,45 @@ import axios from "axios";
 interface Crypto {
     id: string;
     name: string;
-    current_price: number;
-    image: string;
-    market_cap_rank: number;
-    market_cap: number;
-    total_volume: number;
+    price_usd: string;
+    rank: string;
+    percent_change_24h: string;
+    percent_change_1h: string;
+    percent_change_7d: string;
 }
 
 
 
 const Prices = async () => {
-    const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
-    return ( <div>
-         <ul>
-         <li className="mt-2 mb-7 bg-slate-300">
-                    <span className="mr-5">#</span>
-                    
-                    <span className=" text-zinc-500">currency</span>
-                    <span className="mx-14 w-[120px] text-zinc-500">price$</span>
-                    <span className="mx-20 w-[180px] text-zinc-500">market cap$</span>
-                    <span className="mx-20 w-[180px] text-zinc-500">market volume$</span>
-                </li>
-            { res.data.map((coin: Crypto) => (
-                <li key={coin.id} className="my-2">
-                    <span className="mr-5">{coin.market_cap_rank}</span>
-                    <img className="inline-block" src={coin.image} alt={coin.name} width="20" height="20" />
-                    <span>{coin.name}</span>
-                    <span className="mx-14 w-[120px] text-sky-600 text-center">{coin.current_price}</span>
-                    <span className="mx-20 w-[180px] text-center">{coin.market_cap}</span>
-                    <span className="mx-20 w-[180px] text-center">{coin.total_volume}</span>
+    const res = await axios.get('https://api.coinlore.net/api/tickers/');
+    return (<div>
+        <ul>
+            <li className="mt-2 mb-7 flex">
+                <span className="mr-5">#</span>
+
+                <span className=" text-zinc-500 basis-3/12">currency</span>
+                <span className="text-zinc-500 basis-2/12">price$</span>
+                <span className="text-zinc-500 basis-2/12">percent_change_1h</span>
+                <span className="text-zinc-500 basis-2/12">percent_change_24h</span>
+                <span className="text-zinc-500 basis-2/12">percent_change_7d</span>
+            </li>
+            {res.data.data.map((coin: Crypto) => (
+                <li key={coin.id} className="my-2 flex py-1">
+                    <span className="mr-5 text-sm text-zinc-600">{coin.rank}</span>
+                    <span className="basis-3/12">{coin.name}</span>
+                    <span className=" text-sky-700  basis-2/12">${coin.price_usd}</span>
+                    {parseFloat(coin.percent_change_1h) >= 0 ? <span className=" text-center basis-2/12 text-green-600">{coin.percent_change_1h}%</span> :
+                        <span className=" text-center basis-2/12 text-red-600">{coin.percent_change_1h}%</span>}
+                    {parseFloat(coin.percent_change_24h) >= 0 ? <span className=" text-center basis-2/12"><span className="bg-green-500 rounded-xl text-white px-2 py-1">
+                        {coin.percent_change_24h}%</span></span> :
+                        <span className=" text-center basis-2/12"><span className="bg-red-500 py-1 rounded-xl px-2 text-white">{coin.percent_change_24h}%</span></span>}
+                    {parseFloat(coin.percent_change_7d) >= 0 ? <span className=" text-center basis-2/12 text-green-600">{coin.percent_change_7d}%</span> :
+                        <span className=" text-center basis-2/12 text-red-600">{coin.percent_change_7d}%</span>}
                 </li>
             ))
             }
         </ul>
-    </div> );
+    </div>);
 }
 
 export default Prices;
