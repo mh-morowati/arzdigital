@@ -1,8 +1,7 @@
+"use client"
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
 import axios from "axios";
-
-
+import React, { useEffect, useState } from "react";
 
 interface Crypto {
     id: string;
@@ -12,12 +11,25 @@ interface Crypto {
     percent_change_24h: string;
     percent_change_1h: string;
     percent_change_7d: string;
-}
+  }
 
+const Prices: React.FC = () => {
+    const [cryptoData, setCryptoData] = useState<Crypto[]>([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const res = await axios.get("https://api.coinlore.net/api/tickers/");
+            setCryptoData(res.data.data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
-const Prices = async () => {
-    const res = await axios.get('https://api.coinlore.net/api/tickers/');
+      
     return (<div>
         <ul>
             <li className="mt-2 mb-7 flex">
@@ -29,7 +41,7 @@ const Prices = async () => {
                 <span className="text-zinc-500 basis-2/12">percent_change_24h</span>
                 <span className="text-zinc-500 basis-2/12">percent_change_7d</span>
             </li>
-            {res.data.data.map((coin: Crypto) => (
+            {cryptoData.map((coin) => (
                 <li key={coin.id} className="my-2 flex py-1">
                     <span className="mr-5 text-sm text-zinc-600">{coin.rank}</span>
                     <span className="basis-3/12">{coin.name}</span>
