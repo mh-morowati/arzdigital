@@ -15,12 +15,13 @@ interface Crypto {
 
 const Prices: React.FC = () => {
     const [cryptoData, setCryptoData] = useState<Crypto[]>([]);
-
+    const [loading,setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
           try {
             const res = await axios.get("https://api.coinlore.net/api/tickers/");
-            setCryptoData(res.data.data);
+            setLoading(false);
+             setCryptoData(res.data.data);
           } catch (error) {
             console.error("Error fetching data:", error);
           }
@@ -41,6 +42,7 @@ const Prices: React.FC = () => {
                 <span className="text-zinc-500 basis-2/12">percent_change_24h</span>
                 <span className="text-zinc-500 basis-2/12">percent_change_7d</span>
             </li>
+            {loading && <h1 className="text-4xl text-center py-8">Loading........</h1>}
             {cryptoData.map((coin) => (
                 <li key={coin.id} className="my-2 flex py-1">
                     <span className="mr-5 text-sm text-zinc-600">{coin.rank}</span>
