@@ -11,3 +11,7 @@ export interface Crypto {
   export interface PricesProps {
     cryptoData: Crypto[];
   }
+
+  export interface PricesApi {
+    [x: string]: Crypto[];
+  }
