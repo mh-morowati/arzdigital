@@ -6,12 +6,14 @@ interface OrderbookResponse {
 
 async function TetherPrice() {
 
-    const response = await axios.get<OrderbookResponse>('https://api.nobitex.ir/v3/orderbook/USDTIRT',{
-        data:{revalidate: 60}
+    const response = await axios.get<OrderbookResponse>('https://api.nobitex.ir/v3/orderbook/USDTIRT', {
+        data: { revalidate: 60 }
     });
 
     return (<>
-        {parseInt(response.data.lastTradePrice) / 10}
+        <span className="text-[#1aa089] font-medium">
+            {parseInt(response.data.lastTradePrice) < 500000 ? response.data.lastTradePrice : parseInt(response.data.lastTradePrice) / 10}
+        </span>
     </>);
 }
 

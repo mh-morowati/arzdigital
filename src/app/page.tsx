@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 function Home() {
     return ( <div className="md:mx-auto md:w-[90%]">
-        <div className='flex'>
+        <div className='flex max-tablet:mt-[62px]'>
             <Link className='max-[850px]:hidden' href={'https://chromewebstore.google.com/detail/arzdigital/bjhbojnjmbnidlfobobbjipgnnmigkpn'} target='_blank'>
             <Image className='md:mr-2' src={'/19ad0bc765993a468ecbb4ec16b36aa1.webp'} alt={'arzdigital chrome extension'} width={630} height={120}/>
             </Link>
