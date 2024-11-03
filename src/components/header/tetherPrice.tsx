@@ -11,7 +11,7 @@ async function TetherPrice() {
     });
 
     return (<>
-        {response.data.lastTradePrice}
+        {parseInt(response.data.lastTradePrice) / 10}
     </>);
 }
 
