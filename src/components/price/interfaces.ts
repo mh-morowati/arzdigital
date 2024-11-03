@@ -1,6 +1,7 @@
 export interface Crypto {
     id: string;
     name: string;
+    nameid: string;
     price_usd: string;
     rank: string;
     percent_change_24h: string;

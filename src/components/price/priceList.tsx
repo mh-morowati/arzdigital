@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PricesProps } from "./interfaces";
 
 
@@ -13,7 +14,8 @@ const PricesList: React.FC<PricesProps> = ({ cryptoData }) => {
             <span className="text-zinc-500 md:basis-2/12 max-[850px]:hidden">percent_change_7d</span>
           </li>
           {cryptoData.map((coin) => (
-            <li key={coin.id} className="my-2 flex py-1">
+            <Link key={coin.id} href={`/coins/${coin.nameid}`}>
+            <li className="my-2 flex py-1">
               <span className="mr-5 text-sm text-zinc-600">{coin.rank}</span>
               <span className="md:basis-3/12 max-[850px]:basis-2/5">{coin.name}</span>
               <span className=" text-sky-700 md:basis-2/12 max-[850px]:basis-2/5">${coin.price_usd}</span>
@@ -25,6 +27,7 @@ const PricesList: React.FC<PricesProps> = ({ cryptoData }) => {
               {parseFloat(coin.percent_change_7d) >= 0 ? <span className=" text-center md:basis-2/12 text-green-600 max-[850px]:hidden">{coin.percent_change_7d}%</span> :
                 <span className=" text-center md:basis-2/12 text-red-600 max-[850px]:hidden">{coin.percent_change_7d}%</span>}
             </li>
+            </Link>
           ))
           }
         </ul>

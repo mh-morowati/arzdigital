@@ -14,3 +14,10 @@ async function TetherPrice() {
 }
 
 export default TetherPrice;
+
+
+
+
+
+
+

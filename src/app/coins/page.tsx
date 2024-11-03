@@ -1,11 +1,25 @@
 import PricesList from "@/components/price/priceList";
-import { PricesApi } from "@/components/price/interfaces";
+import { Crypto } from "@/components/price/interfaces";
 import Link from "next/link";
-import axios from "axios";
+
+
+async function getCryptoData(): Promise<Crypto[]> {
+
+    const res= await fetch("https://api.coinlore.net/api/tickers/" ,{
+      next: { revalidate: 60 },
+    });
+    
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await res.json();
+    return data.data as Crypto[];
+}
 
 
  const Coins = async () => {
-  const res= await axios.get<PricesApi>("https://api.coinlore.net/api/tickers/");
+  const cryptoData = await getCryptoData();
 
 
   return (
@@ -13,7 +27,7 @@ import axios from "axios";
       <div className=" md:mx-auto mt-14 mb-14 md:w-[70%]">
         <Link href={"/coins"}><h1 className="text-center md:text-3xl text-[#30505c]">قیمت لحظه‌ ای ارز‌های دیجیتال</h1></Link>
         <div className='mt-10'>
-        <PricesList cryptoData={res.data.data} />
+        <PricesList cryptoData={cryptoData} />
         </div>
       </div>
     </div>
