@@ -6,7 +6,7 @@ import Link from "next/link";
 async function getCryptoData(): Promise<Crypto[]> {
 
     const res= await fetch("https://api.coinlore.net/api/tickers/" ,{
-      next: { revalidate: 60 },
+      next: { revalidate: 1 },
     });
     
     if (!res.ok) {

@@ -7,7 +7,7 @@ interface OrderbookResponse {
 async function TetherPrice() {
 
     const response = await axios.get<OrderbookResponse>('https://api.nobitex.ir/v3/orderbook/USDTIRT', {
-        data: { revalidate: 60 }
+        data: { revalidate: 1 }
     });
 
     return (<>
