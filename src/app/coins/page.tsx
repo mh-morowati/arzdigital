@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
  
   fetchData();
 
-  const intervalId = setInterval(fetchData, 1000); // 10-second interval
+  const intervalId = setInterval(fetchData, 50000); // 50-second interval
 
   // Clean up the interval on component unmount
   return () => clearInterval(intervalId);
