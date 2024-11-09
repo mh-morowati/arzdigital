@@ -1,25 +1,35 @@
+'use client'
 import PricesList from "@/components/price/priceList";
 import { Crypto } from "@/components/price/interfaces";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 
-async function getCryptoData(): Promise<Crypto[]> {
 
-    const res= await fetch("https://api.coinlore.net/api/tickers/" ,{
-      next: { revalidate: 1 },
-    });
-    
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+ const Coins = () => {
+  const [data, setData] = useState<Crypto[]>([])
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+      const response = await fetch('https://api.coinlore.net/api/tickers/')
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const result = await response.json()
+      setData(result.data)
+    } catch (error) {
+      console.error('An error occurred while fetching the data:', error);
     }
+  };
+ 
+  fetchData();
 
-    const data = await res.json();
-    return data.data as Crypto[];
-}
+  const intervalId = setInterval(fetchData, 1000); // 10-second interval
 
-
- const Coins = async () => {
-  const cryptoData = await getCryptoData();
+  // Clean up the interval on component unmount
+  return () => clearInterval(intervalId);
+  }, [])
 
 
   return (
@@ -27,7 +37,7 @@ async function getCryptoData(): Promise<Crypto[]> {
       <div className=" md:mx-auto mt-14 mb-14 md:w-[70%]">
         <Link href={"/coins"}><h1 className="text-center md:text-3xl text-[#30505c]">قیمت لحظه‌ ای ارز‌های دیجیتال</h1></Link>
         <div className='mt-10'>
-        <PricesList cryptoData={cryptoData} />
+        <PricesList cryptoData={data} />
         </div>
       </div>
     </div>
