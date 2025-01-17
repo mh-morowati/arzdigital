@@ -1,7 +1,7 @@
 
 
 function Currency() {
-    return ( <p></p> );
+    return ( <p>currency page</p> );
 }
 
 export default Currency;
