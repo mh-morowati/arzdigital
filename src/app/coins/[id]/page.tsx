@@ -1,10 +1,7 @@
 
-interface Params{
-    id: string;
-}
 
-function Currency({id}: Params) {
-    return ( <p key={id}>{id}</p> );
+function Currency() {
+    return ( <p></p> );
 }
 
 export default Currency;
