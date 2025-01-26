@@ -3,6 +3,7 @@ import { apiService } from "@/api/services";
 import { CurrencyData } from "@/components/types";
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Loading from "@/app/loading";
 
 
 
@@ -15,21 +16,27 @@ interface ProductProps {
 const Currency: React.FC<ProductProps> = ({ params }) => {
   const id = params.id || ''
   const [currencyData, setCurrencyData] = useState<CurrencyData>();
+const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     // get countries from server
     (
       async () => {
+        setLoading(true)
         try {
           const response = await apiService.getCurrencyFocus(id)
           setCurrencyData(response.data.data)
+          setLoading(false)
         }
         catch (err) {
           console.error(err)
         }
       }
     )()
+    setLoading(false)
   }, [id])
+
+  if (loading) Loading()
 
   return (<div className="w-96 border rounded min-h-[500px] place-self-center p-5">
     <Image className="inline-block" src={'../currency-icons/' + id +'.svg'} alt={''} width={30} height={30}/>
