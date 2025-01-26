@@ -7,6 +7,7 @@ import { apiService } from "@/api/services"
 
 
 const Coins = () => {
+
   const [data, setData] = useState<Crypto[]>([])
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const Coins = () => {
       }
     })()
 
-  }, [data]) 
+  }, [data])
 
   return (
     <div>
