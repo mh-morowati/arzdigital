@@ -3,7 +3,6 @@ import { apiService } from "@/api/services"
 import { CurrencyData } from "@/components/types"
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import Loading from "@/app/loading"
 
 interface ProductProps {
   params: {
@@ -16,30 +15,23 @@ const Currency: React.FC<ProductProps> = ({ params }) => {
 
   const id = params.id || ''
   const [currencyData, setCurrencyData] = useState<CurrencyData>()
-  const [loading, setLoading] = useState(false)
-
   useEffect(() => {
     // get currency from api
     (
       async () => {
-        setLoading(true)
         try {
           const response = await apiService.getCurrencyFocus(id)
           setCurrencyData(response.data.data)
-          setLoading(false)
         }
         catch (err) {
           console.error(err)
         }
       }
     )()
-    setLoading(false)
   }, [id])
 
-  if (loading) Loading()
-
   return (<div
-    className="w-96 border rounded min-h-[500px] place-self-center p-5 flex-col space-y-5 font-medium"
+    className="w-96 border rounded min-h-[500px] place-self-center p-5 flex-col space-y-5 font-medium mt-14"
   >
     <Image
       className="inline-block"
@@ -102,6 +94,11 @@ const Currency: React.FC<ProductProps> = ({ params }) => {
           {currencyData?.explorer}
         </a>
       </>
+    }
+    {
+      !currencyData && <h1>
+    No information...
+      </h1>
     }
   </div>)
 }

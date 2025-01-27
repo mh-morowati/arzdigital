@@ -1,3 +1,4 @@
+import { OrderbookResponse } from "@/components/types"
 import axios from "axios"
 
 const getCurrencyList = async () => {
@@ -10,7 +11,13 @@ const getCurrencyFocus = async (nameId: string) => {
   return response
 }
 
+const getTetherPrice = async () => {
+  const response = await axios.get<OrderbookResponse>('https://api.nobitex.ir/v3/orderbook/USDTIRT')
+  console.log(response)
+  return response
+}
 export const apiService = {
   getCurrencyList,
-  getCurrencyFocus
+  getCurrencyFocus,
+  getTetherPrice
 }

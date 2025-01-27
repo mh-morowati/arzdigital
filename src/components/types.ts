@@ -12,3 +12,7 @@ export interface CurrencyData {
   volumeUsd24Hr: string
   vwap24Hr: string
 }
+
+export type OrderbookResponse = {
+  lastTradePrice: string;
+}

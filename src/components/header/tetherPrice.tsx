@@ -6,9 +6,7 @@ interface OrderbookResponse {
 
 async function TetherPrice() {
 
-    const response = await axios.get<OrderbookResponse>('https://api.nobitex.ir/v3/orderbook/USDTIRT', {
-        data: { revalidate: 1 }
-    });
+    const response = await axios.get<OrderbookResponse>('https://api.nobitex.ir/v3/orderbook/USDTIRT');
 
     return (<>
         <span className="text-[#1aa089] font-medium">

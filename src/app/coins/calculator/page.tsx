@@ -1,7 +1,12 @@
+import CalculatorApi from "@/components/calculator"
+
 
 
 function Calculator() {
-    return ( <>Calculator</> );
+
+    return ( <div>
+   <CalculatorApi/>
+    </div> )
 }
 
-export default Calculator;
+export default Calculator
