@@ -1,1 +1,1 @@
-you can show this project in https://arzdigital123.liara.run/
+you can show this project in arzdigital.vercel.app
