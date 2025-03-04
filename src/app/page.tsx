@@ -1,25 +1,42 @@
+'use client'
 import Link from 'next/link';
-import Coins from './coins/page';
-import Image from 'next/image';
+import { Crypto } from "@/components/price/interfaces"
+import { useEffect, useState } from "react"
+import { apiService } from "@/api/services"
+import PricesList from '@/components/price/priceList';
 
 function Home() {
+    const [data, setData] = useState<Crypto[]>([])
+
+  useEffect(() => {
+
+    (async () => {
+      try {
+        const response = await apiService.getCurrencyList()
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const result = await response.json()
+        setData(result.data)
+      } catch (error) {
+        console.error('An error occurred while fetching the data:', error)
+      }
+    })()
+
+  }, [data])
+    
     return (<div className="md:mx-auto md:w-[90%]">
-        <div className='flex max-tablet:mt-[62px]'>
-            <Link className='max-[850px]:hidden' href={'https://chromewebstore.google.com/detail/arzdigital/bjhbojnjmbnidlfobobbjipgnnmigkpn'} target='_blank'>
-                <Image className='md:mr-2' src={'/19ad0bc765993a468ecbb4ec16b36aa1.webp'} alt={'arzdigital chrome extension'} width={630} height={120} />
-            </Link>
-            <Link href={'https://chromewebstore.google.com/detail/arzdigital/bjhbojnjmbnidlfobobbjipgnnmigkpn'} target='_blank'>
-                <Image src={'/231f637ec42e18bc3061009c32389e12.webp'} alt={'arzdigital chrome extension'} width={630} height={120} />
-            </Link>
+        <div className=" md:mx-auto mt-14 mb-14 md:w-[70%]">
+        <Link href={"/"}>
+          <h1
+            className="text-center md:text-3xl text-[#30505c]"
+          >قیمت لحظه‌ ای ارز‌های دیجیتال
+          </h1>
+        </Link>
+        <div className='mt-10'>
+          <PricesList cryptoData={data} />
         </div>
-        <div className="h-96 overflow-hidden">
-            <Coins />
-        </div>
-        <div className='text-center'>
-            <Link href={'/coins'}>
-                <button className='border border-zinc-300 px-20 py-2 text-[#1aa089] rounded mt-2'>نمایش همه ارزها</button>
-            </Link>
-        </div>
+      </div>
     </div>);
 }
 

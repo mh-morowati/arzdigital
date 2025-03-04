@@ -2,19 +2,15 @@
 import { apiService } from "@/api/services"
 import { CurrencyData } from "@/components/types"
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
-interface ProductProps {
-  params: {
-    id?: string
-  }
+type Props = {
+    id: string
 }
+const CoinPrice = (props : Props) => {
 
-
-const Currency: React.FC<ProductProps> = ({ params }) => {
-
-  const id = params.id || ''
-  const [currencyData, setCurrencyData] = useState<CurrencyData>()
+    const { id } = props
+    const [currencyData, setCurrencyData] = useState<CurrencyData>()
+    
   useEffect(() => {
     // get currency from api
     (
@@ -29,18 +25,9 @@ const Currency: React.FC<ProductProps> = ({ params }) => {
       }
     )()
   }, [id])
-
-  return (<div
-    className="w-96 border rounded min-h-[500px] place-self-center p-5 flex-col space-y-5 font-medium mt-14"
-  >
-    <Image
-      className="inline-block"
-      src={'../currency-icons/' + id + '.svg'}
-      alt={''}
-      width={30}
-      height={30}
-    />
-    {
+    
+    return (<>
+     {
       currencyData && <>
         <h1 className="inline-block mx-2">
           {currencyData?.name} ({currencyData?.symbol})
@@ -99,8 +86,8 @@ const Currency: React.FC<ProductProps> = ({ params }) => {
       !currencyData && <h1>
     No information...
       </h1>
-    }
-  </div>)
+        }
+    </>)
 }
 
-export default Currency
+export default CoinPrice

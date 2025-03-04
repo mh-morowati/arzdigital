@@ -1,7 +1,13 @@
-import { FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa"
+
 
 function ResponsiveSearch() {
-    return ( <><FaSearch/></> );
+
+    return (
+        <>
+        <FaSearch />
+    </>
+    )
 }
 
-export default ResponsiveSearch;
+export default ResponsiveSearch
