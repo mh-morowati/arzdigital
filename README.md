@@ -4,3 +4,4 @@ https://arzdigital.vercel.app/
 
 
 in this project i use a api for show crypto currency price in time on the next js page
+
