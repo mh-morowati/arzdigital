@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { TbBraille } from "react-icons/tb";
-import Search from '../search/search';
-import TetherPrice from './tetherPrice';
-import ResponsiveSearch from '../search/responseSearch';
+import Link from "next/link"
+import { TbBraille } from "react-icons/tb"
+import Search from '../search/search'
+import TetherPrice from './tetherPrice'
 
 
 function Header() {
@@ -13,11 +12,6 @@ function Header() {
         
          max-tablet:bg-white max-tablet:w-[100%] max-tablet:z-50 max-[850px]:h-14 max-tablet:border-b"
             >
-            {/* just for response max-width tablet */}
-                <button className="absolute tablet:hidden">
-                    <ResponsiveSearch />
-                </button>
-            {/* response*/}
                 <div className="tablet:flex tablet:basis-1/2 max-tablet:text-center">
                     
                     <Link className="tablet:flex" href={"/"}>
@@ -62,7 +56,7 @@ function Header() {
                 >لیست کل ارزها</button>
             </Link>
         </div>
-    </div>);
+    </div>)
 }
 
-export default Header;
+export default Header
